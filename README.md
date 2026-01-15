@@ -65,7 +65,7 @@ assert 'raw_counts' in adata.layers.keys()
 ### Data
 
 Demo data is provided in `demo/data/`:
-- `demo_retinal_progenitor.h5ad` - Retinal progenitor cells, balanced subset with 50 cells per somite stage (~94MB, included in the repo)
+- `demo_retinal_progenitor.h5ad` - Retinal progenitor cells, balanced subset with 50 cells per somite stage and 100 HVGs (1,554 cells total, included in the repo)
 
 Full data will be available on Zenodo:
 - `prcd_retinal_progenitor.h5ad` - Full retinal progenitor dataset (~1.9GB, for full-scale experiments)
