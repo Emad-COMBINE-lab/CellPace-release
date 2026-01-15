@@ -1,0 +1,30 @@
+name: cellpace
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.12
+  - pytorch=2.5.1
+  - pytorch-cuda=11.8
+  - numpy
+  - pandas
+  - scipy
+  - matplotlib
+  - seaborn
+  - scikit-learn
+  - pip
+  - pip:
+    - scanpy==1.11.5
+    - scvi-tools==1.4.0
+    - anndata
+    - mudata
+    - pytorch-lightning==2.6.0
+    - einops
+    - omegaconf
+    - wandb
+    - tqdm
+    - umap-learn
+    - POT
+    - rich-argparse

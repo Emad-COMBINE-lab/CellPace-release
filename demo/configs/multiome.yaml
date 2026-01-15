@@ -1,0 +1,196 @@
+# CellPace Configuration - Multiome Palate Data with Pseudotime
+
+# ============================================================================
+# EXPERIMENT
+# ============================================================================
+experiment:
+  name: cellpace_demo_multiome
+  seed: 42
+  output_root: demo/output/multiome
+  vae_to_use: multivi
+  vae_dir: ${experiment.output_root}/multivi
+  dif_dir: ${experiment.output_root}/dif-${dif.diffusion.objective}/
+  device: cuda
+  num_workers: 4
+  pin_memory: true
+  num_gpus: 2
+  strategy: auto
+
+# ============================================================================
+# DATA
+# ============================================================================
+data:
+  dataset: palate_multiome
+  special_genes_to_include: []
+
+  paths:
+    input: demo/data/prcd_multiome_palate.h5mu
+    preprocess_cache: ${experiment.output_root}/data_cache
+    dif_seq_cache: ${experiment.dif_dir}/input_seq
+
+  split:
+    strategy: stage_holdout
+
+    stage_holdout:
+      train: ["pt_00", "pt_01", "pt_02", "pt_03", "pt_04", "pt_06", "pt_07", "pt_08", "pt_09",
+              "pt_11", "pt_12", "pt_13", "pt_14", "pt_16", "pt_17", "pt_18", "pt_19",
+              "pt_21", "pt_22", "pt_23", "pt_24", "pt_26", "pt_27", "pt_28", "pt_29",
+              "pt_31", "pt_32", "pt_33", "pt_34", "pt_36", "pt_37", "pt_38", "pt_39",
+              "pt_41", "pt_42", "pt_43", "pt_44", "pt_45"]
+      val_interp: ["pt_05", "pt_15", "pt_25", "pt_35"]
+      val_extrap: ["pt_46","pt_47"]
+      test_interp: ["pt_10", "pt_20", "pt_30", "pt_40"]
+      test_extrap: ["pt_48", "pt_49"]
+
+  columns:
+    stage_real: palantir_discrete
+    stage_generated: palantir_discrete
+
+  n_genes: 3000
+  vae_latent_dim: ${multivi.architecture.n_latent}
+  vae_use_layer: raw_counts
+
+  sequences:
+    length: 5
+    chunk_size: 5
+    min_cells_per_stage: 100
+    n_sequences: 1000000
+    force_regenerate: false
+
+# ============================================================================
+# SCVI (VAE)
+# ============================================================================
+scvi:
+  architecture:
+    n_hidden: 512
+    n_latent: 256
+    n_layers: 2
+    dropout_rate: 0.1
+    gene_likelihood: zinb
+    use_layer: raw_counts
+
+  training:
+    max_epochs: 400
+    batch_size: 256
+    lr: 1e-3
+    weight_decay: 1e-5
+    early_stopping:
+      enabled: true
+    retrain: false
+
+# ============================================================================
+# MULTIVI (VAE)
+# ============================================================================
+multivi:
+  architecture:
+    n_hidden: 512
+    n_latent: 256
+    n_layers: 2
+    dropout_rate: 0.1
+    gene_likelihood: zinb
+    use_layer: raw_counts
+    modality_weights: equal
+    modality_penalty: Jeffreys
+
+  training:
+    max_epochs: 400
+    batch_size: 256
+    lr: 1e-3
+    weight_decay: 1e-5
+    early_stopping: true
+    early_stopping_patience: 100
+    n_epochs_kl_warmup: 50
+    check_val_every_n_epoch: null
+    retrain: false
+
+# ============================================================================
+# DIFFUSION FORCING
+# ============================================================================
+dif:
+  architecture:
+    input_dim: ${multivi.architecture.n_latent}
+    sequence_length: ${data.sequences.length}
+    chunk_size: ${data.sequences.chunk_size}
+    external_cond_dim: 0
+
+    gap_modeling:
+      enabled: true
+      gap_scale: 1.0
+
+    transformer:
+      n_layers: 2
+      n_heads: 16
+      hidden_dim: 256
+      feedforward_dim: 512
+      dropout: 0.1
+      weight_init_std: 0.01
+
+    time_embedding:
+      type: sinusoidal
+      theta: 10000
+
+    causal: true
+    frame_stack: 1
+    frame_skip: 0
+    context_frames: 1
+
+  training:
+    max_steps: 40000
+    batch_size: 512
+    checkpoint_every: 10000
+    num_gpus: 2
+    strategy: ddp
+
+    loss:
+      strategy: snr
+      snr_clip: 10.0
+      snr_clip_mse: 1000000
+      temporal_decay: 1.0
+
+    optimizer:
+      type: adamw
+      lr: 0.00020060233185811036
+      lr_min: 1e-6
+      weight_decay: 8.935653847474636e-05
+      betas: [0.9099092388073987, 0.9713123337371452]
+      warmup_steps: 200
+      gradient_clip_val: 1.0
+
+  diffusion:
+    objective: pred_x0
+    logsnr_min: -15.0
+    logsnr_max: 15.0
+    shift: 1.0
+    timesteps: 1000
+    sampling_timesteps: 200
+    noise_clip: 20.0
+    schedule:
+      type: cosine
+      cosine:
+        offset: 0.01
+    sampling:
+      method: ddim
+      eta: 0.5
+    stabilization_level: 5
+
+  generation:
+    mode: noise_start
+    n_samples: 500
+    batch_size: 200
+    noise_level: random_all
+    scheduling_matrix: pyramid
+    uncertainty_scale: 1.0
+    context_noise_scale: 0.1
+
+# ============================================================================
+# LOGGING
+# ============================================================================
+logging:
+  level: INFO
+  save_to_file: true
+  wandb:
+    enabled: true
+    project: cellpace
+    entity: null
+    mode: offline
+    log_frequency: 1000

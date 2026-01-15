@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Demo data (too large for git - users provide their own)
+demo/data/*.h5ad
+demo/data/*.h5mu
+demo/data/*.h5
+demo/data/*
+
+# But keep small demo files and utility scripts
+!demo/data/demo_*.h5ad
+!demo/data/demo_*.h5mu
+!demo/data/subsample_data.py
+!demo/data/README.md
+!demo/data/.gitkeep
+
+# Generated outputs (exclude by default, but keep retinal demo)
+demo/output/*/
+!demo/output/retinal/
+demo/output/retinal/dif-pred_x0/input_seq/
+
+# Model outputs (root level only)
+/output/
+/expected_output/
+*.pth
+wandb/
+
+# Logs
+logs/
+
+# Exclude large files and logs, but keep demo checkpoints and output
+*.log
+!demo/output/retinal/**/*.log
+*.ckpt
+!demo/output/retinal/**/*.ckpt
+
+# Ignore all hidden files/directories
+.*
+!.gitignore
+!.github
+
+# Environment
+*.swp
+*.swo
+*~

@@ -1,0 +1,110 @@
+Generation started at demo/output/retinal/dif-pred_x0/infer_ns_step_10000/generate.log
+Mode: noise_start, Checkpoint: demo/output/retinal/dif-pred_x0/checkpoints/checkpoint_step=10000.ckpt
+Loading checkpoint from demo/output/retinal/dif-pred_x0/checkpoints/checkpoint_step=10000.ckpt
+Checkpoint iteration: 10000
+Loading model weights for inference
+Loading shared metadata from demo/output/retinal/scvi/metadata.pkl
+Loaded metadata - stage range: [0, 32]
+Loaded per-stage library sizes for 31 stages (scVI)
+Loaded DiF model v3 from demo/output/retinal/dif-pred_x0/checkpoints/checkpoint_step=10000.ckpt
+Model config: seq_len=9, timesteps=1000, sampling_timesteps=200
+Loading SCVI model from demo/output/retinal/scvi
+
+============================================================
+Generating noise_start samples
+============================================================
+
+Generating samples for 31 stages...
+Mode: noise_start
+Samples per stage: 1000
+Batch size: 200 (will generate in 5 batches)
+  Generating batch 1/5 (200 samples)...
+
+=== Generation Setup Debug ===
+Context stages: None (pure noise generation)
+Target stages: ['somite_00', 'somite_02', 'somite_03', 'somite_04', 'somite_05', 'somite_07', 'somite_08', 'somite_09', 
+'somite_10', 'somite_11', 'somite_12', 'somite_14', 'somite_15', 'somite_16', 'somite_17', 'somite_18', 'somite_20', 
+'somite_21', 'somite_22', 'somite_23', 'somite_24', 'somite_25', 'somite_26', 'somite_27', 'somite_28', 'somite_29', 
+'somite_30', 'somite_31', 'somite_32', 'somite_33', 'somite_34'] (positions 0-30)
+Schedule type: pyramid (uncertainty_scale=1.0)
+Schedule shape: (230, 31) (height=230, positions=31)
+Schedule first step: [200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
+ 200 200 200 200 200 200 200 200 200 200 200 200 200]
+Schedule last step: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1]
+Target positions start with noise: [200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200 200
+ 200 200 200 200 200 200 200 200 200 200 200 200 200]
+
+Pyramid pattern: Later positions start denoising later
+
+First 10 denoising steps:
+  Step 0: [200 200 200 200 200 200 200 200]...
+  Step 1: [199 200 200 200 200 200 200 200]...
+  Step 2: [198 199 200 200 200 200 200 200]...
+  Step 3: [197 198 199 200 200 200 200 200]...
+  Step 4: [196 197 198 199 200 200 200 200]...
+  Step 5: [195 196 197 198 199 200 200 200]...
+  Step 6: [194 195 196 197 198 199 200 200]...
+  Step 7: [193 194 195 196 197 198 199 200]...
+  Step 8: [192 193 194 195 196 197 198 199]...
+  Step 9: [191 192 193 194 195 196 197 198]...
+
+  ✓ Schedule is monotonic (noise properly decreases)
+===========================
+  Step 1: [] → ['somite_00', 'somite_02', 'somite_03', 'somite_04', 'somite_05', 'somite_07', 'somite_08', 'somite_09', 
+'somite_10']
+  Step 10: ['somite_02', 'somite_03', 'somite_04', 'somite_05', 'somite_07', 'somite_08', 'somite_09', 'somite_10'] → 
+somite_11
+  Step 11: ['somite_03', 'somite_04', 'somite_05', 'somite_07', 'somite_08', 'somite_09', 'somite_10', 'somite_11'] → 
+somite_12
+  Step 12: ['somite_04', 'somite_05', 'somite_07', 'somite_08', 'somite_09', 'somite_10', 'somite_11', 'somite_12'] → 
+somite_14
+  Step 13: ['somite_05', 'somite_07', 'somite_08', 'somite_09', 'somite_10', 'somite_11', 'somite_12', 'somite_14'] → 
+somite_15
+  Step 14: ['somite_07', 'somite_08', 'somite_09', 'somite_10', 'somite_11', 'somite_12', 'somite_14', 'somite_15'] → 
+somite_16
+  Step 15: ['somite_08', 'somite_09', 'somite_10', 'somite_11', 'somite_12', 'somite_14', 'somite_15', 'somite_16'] → 
+somite_17
+  Step 16: ['somite_09', 'somite_10', 'somite_11', 'somite_12', 'somite_14', 'somite_15', 'somite_16', 'somite_17'] → 
+somite_18
+  Step 17: ['somite_10', 'somite_11', 'somite_12', 'somite_14', 'somite_15', 'somite_16', 'somite_17', 'somite_18'] → 
+somite_20
+  Step 18: ['somite_11', 'somite_12', 'somite_14', 'somite_15', 'somite_16', 'somite_17', 'somite_18', 'somite_20'] → 
+somite_21
+  Step 19: ['somite_12', 'somite_14', 'somite_15', 'somite_16', 'somite_17', 'somite_18', 'somite_20', 'somite_21'] → 
+somite_22
+  Step 20: ['somite_14', 'somite_15', 'somite_16', 'somite_17', 'somite_18', 'somite_20', 'somite_21', 'somite_22'] → 
+somite_23
+  Step 21: ['somite_15', 'somite_16', 'somite_17', 'somite_18', 'somite_20', 'somite_21', 'somite_22', 'somite_23'] → 
+somite_24
+  Step 22: ['somite_16', 'somite_17', 'somite_18', 'somite_20', 'somite_21', 'somite_22', 'somite_23', 'somite_24'] → 
+somite_25
+  Step 23: ['somite_17', 'somite_18', 'somite_20', 'somite_21', 'somite_22', 'somite_23', 'somite_24', 'somite_25'] → 
+somite_26
+  Step 24: ['somite_18', 'somite_20', 'somite_21', 'somite_22', 'somite_23', 'somite_24', 'somite_25', 'somite_26'] → 
+somite_27
+  Step 25: ['somite_20', 'somite_21', 'somite_22', 'somite_23', 'somite_24', 'somite_25', 'somite_26', 'somite_27'] → 
+somite_28
+  Step 26: ['somite_21', 'somite_22', 'somite_23', 'somite_24', 'somite_25', 'somite_26', 'somite_27', 'somite_28'] → 
+somite_29
+  Step 27: ['somite_22', 'somite_23', 'somite_24', 'somite_25', 'somite_26', 'somite_27', 'somite_28', 'somite_29'] → 
+somite_30
+  Step 28: ['somite_23', 'somite_24', 'somite_25', 'somite_26', 'somite_27', 'somite_28', 'somite_29', 'somite_30'] → 
+somite_31
+  Step 29: ['somite_24', 'somite_25', 'somite_26', 'somite_27', 'somite_28', 'somite_29', 'somite_30', 'somite_31'] → 
+somite_32
+  Step 30: ['somite_25', 'somite_26', 'somite_27', 'somite_28', 'somite_29', 'somite_30', 'somite_31', 'somite_32'] → 
+somite_33
+  Step 31: ['somite_26', 'somite_27', 'somite_28', 'somite_29', 'somite_30', 'somite_31', 'somite_32', 'somite_33'] → 
+somite_34
+  Generating batch 2/5 (200 samples)...
+  Generating batch 3/5 (200 samples)...
+  Generating batch 4/5 (200 samples)...
+  Generating batch 5/5 (200 samples)...
+
+Decoding latents to gene expression...
+Decoded to gene expression: 100 genes
+
+Saved 31000 generated cells to demo/output/retinal/dif-pred_x0/infer_ns_step_10000/generated_latents.h5ad
+Saved 1550 real cells to demo/output/retinal/dif-pred_x0/infer_ns_step_10000/real_latents.h5ad
+
+Generated samples saved to: demo/output/retinal/dif-pred_x0/infer_ns_step_10000
