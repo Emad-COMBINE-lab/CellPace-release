@@ -1,4 +1,9 @@
-# CellPace: A temporal diffusion-forcing framework for simulation, interpolation and forecasting of single-cell dynamics
+# CellPace
+
+CellPace is a temporal diffusion-forcing framework for simulation, interpolation and forecasting of single-cell dynamics, built on top of [PyTorch](https://pytorch.org/).
+
+
+If you find CellPace useful, please consider giving it a ⭐
 
 ## 📋 System Requirements
 
@@ -187,5 +192,3 @@ We compare against the following methods for temporal single-cell generation (so
 6. [scNODE](https://github.com/rsinghlab/scNODE): Zhang, J., et al., scNODE: generative model for temporal single cell transcriptomic data prediction. Bioinformatics, 2024. 40(Supplement_2): p. ii146-ii154.
 
 We thank the authors of these methods for making their code publicly available.
-
-
